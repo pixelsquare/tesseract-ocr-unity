@@ -136,7 +136,7 @@ namespace PixelSquare.Scripts.Editor
 
             return targetStr;
         }
-	}
+    }
 
 } // PixelSquare.Scripts.Editor
 

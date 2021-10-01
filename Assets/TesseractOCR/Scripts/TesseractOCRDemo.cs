@@ -15,26 +15,26 @@ using System.Collections.Generic;
 
 namespace PixelSquare
 {
-	using TesseractOCR;
-	using TesseractOCR.Utility;
+    using TesseractOCR;
+    using TesseractOCR.Utility;
 
-	/// <summary>
-	/// TODO: Describe the class outline here
-	/// </summary>
-	/// <remarks> Detailed information about the class. </remarks>
-	public class TesseractOCRDemo : MonoBehaviour 
-	{
-		[SerializeField] private RawImage m_Image = null;
-		[SerializeField] private Text m_Text = null;
+    /// <summary>
+    /// TODO: Describe the class outline here
+    /// </summary>
+    /// <remarks> Detailed information about the class. </remarks>
+    public class TesseractOCRDemo : MonoBehaviour 
+    {
+        [SerializeField] private RawImage m_Image = null;
+        [SerializeField] private Text m_Text = null;
 
-		private IOpticalCharacterReader m_Ocr = null;
+        private IOpticalCharacterReader m_Ocr = null;
 
-		/// <summary>
-		/// Use this for initialization
-		/// </summary>
-		public void Start() 
-		{
-			m_Ocr = new TesseractOCRImpl();
+        /// <summary>
+        /// Use this for initialization
+        /// </summary>
+        public void Start() 
+        {
+            m_Ocr = new TesseractOCRImpl();
             Debug.Log(m_Ocr.Initialize());
             Debug.Log(m_Ocr.GetVersion());
         }
@@ -43,15 +43,15 @@ namespace PixelSquare
         {
             if(m_Ocr != null)
             {
-				m_Ocr.Dispose();
+                m_Ocr.Dispose();
             }
         }
 
         public void ConvertImageToText()
         {
-			m_Ocr.SetImage(m_Image);
-			m_Text.text = m_Ocr.GetText();
+            m_Ocr.SetImage(m_Image);
+            m_Text.text = m_Ocr.GetText();
         }
-	}
-	
+    }
+    
 } // namespace PixelSquare

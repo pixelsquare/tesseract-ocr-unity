@@ -9,53 +9,53 @@
 
 namespace PixelSquare.TesseractOCR.Enums
 {
-	public enum EngineMode : uint
+    public enum EngineMode : uint
     {
-		TESSERACT_ONLY = 0,
-		LSTM_ONLY,
-		TESSERACT_LSTM_COMBINED,
-		DEFAULT
+        TESSERACT_ONLY = 0,
+        LSTM_ONLY,
+        TESSERACT_LSTM_COMBINED,
+        DEFAULT
     }
 
-	public enum SegmentationMode : uint
+    public enum SegmentationMode : uint
     {
-		OSD_ONLY = 0,
-		AUTO_OSD,
-		AUTO_ONLY,
-		AUTO,
-		SINGLE_COLUMN,
-		SINGLE_BLOCK_VERT_TEXT,
-		SINGLE_BLOCK,
-		SINGLE_LINE,
-		SINGLE_WORD,
-		CIRCLE_WORD,
-		SINGLE_CHAR,
-		SPARSE_CHAR,
-		SPARSE_TEXT_OSD,
-		RAW_LINE,
-		COUNT
+        OSD_ONLY = 0,
+        AUTO_OSD,
+        AUTO_ONLY,
+        AUTO,
+        SINGLE_COLUMN,
+        SINGLE_BLOCK_VERT_TEXT,
+        SINGLE_BLOCK,
+        SINGLE_LINE,
+        SINGLE_WORD,
+        CIRCLE_WORD,
+        SINGLE_CHAR,
+        SPARSE_CHAR,
+        SPARSE_TEXT_OSD,
+        RAW_LINE,
+        COUNT
     }
 
-	public enum Orientation : uint
-	{
-		PAGE_UP = 0,
-		PAGE_RIGHT,
-		PAGE_DOWN,
-		PAGE_LEFT
-	}
+    public enum Orientation : uint
+    {
+        PAGE_UP = 0,
+        PAGE_RIGHT,
+        PAGE_DOWN,
+        PAGE_LEFT
+    }
 
-	public enum WritingDirection : uint
-	{
-		LEFT_TO_RIGHT = 0,
-		RIGHT_TO_LEFT,
-		TOP_TO_BOTTOM
-	}
+    public enum WritingDirection : uint
+    {
+        LEFT_TO_RIGHT = 0,
+        RIGHT_TO_LEFT,
+        TOP_TO_BOTTOM
+    }
 
-	public enum TextlineOrder : uint
-	{
-		LEFT_TO_RIGHT = 0,
-		RIGHT_TO_LEFT,
-		TOP_TO_BOTTOM
-	}
+    public enum TextlineOrder : uint
+    {
+        LEFT_TO_RIGHT = 0,
+        RIGHT_TO_LEFT,
+        TOP_TO_BOTTOM
+    }
 
 } // namespace PixelSquare

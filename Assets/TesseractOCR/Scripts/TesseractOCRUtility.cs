@@ -16,12 +16,12 @@ using System.Collections.Generic;
 
 namespace PixelSquare.TesseractOCR.Utility
 {
-	/// <summary>
-	/// TODO: Describe the class outline here
-	/// </summary>
-	/// <remarks> Detailed information about the class. </remarks>
-	public class TesseractOCRUtility
-	{
+    /// <summary>
+    /// TODO: Describe the class outline here
+    /// </summary>
+    /// <remarks> Detailed information about the class. </remarks>
+    public class TesseractOCRUtility
+    {
         public static byte[] ParseImageBytes(Image image)
         {
             Debug.Assert(image, "Image must not be nulled!");
@@ -59,27 +59,27 @@ namespace PixelSquare.TesseractOCR.Utility
 
         public static byte[] FlipHorizontal(byte[] imageBuffer, int width, int height, int size = 3)
         {
-			int dataLen = imageBuffer.Length;
-			byte[] result = new byte[dataLen];
+            int dataLen = imageBuffer.Length;
+            byte[] result = new byte[dataLen];
 
-			List<byte> r = new List<byte>();
-			List<byte> tmp = new List<byte>();
-			for(int i = 0; i < dataLen / size; i++)
+            List<byte> r = new List<byte>();
+            List<byte> tmp = new List<byte>();
+            for(int i = 0; i < dataLen / size; i++)
             {
-				for(int j = 0; j < size; j++)
+                for(int j = 0; j < size; j++)
                 {
-					tmp.Add(imageBuffer[i + j]);
+                    tmp.Add(imageBuffer[i + j]);
                 }
 
-				if(tmp.Count >= width * size)
+                if(tmp.Count >= width * size)
                 {
-					tmp.Reverse();
-					r.AddRange(tmp);
-					tmp.Clear();
+                    tmp.Reverse();
+                    r.AddRange(tmp);
+                    tmp.Clear();
                 }
             }
 
-			result = r.ToArray();
+            result = r.ToArray();
 
             //// TODO: FIX
             //for(int i = 0; i < dataLen / size; i++)
@@ -93,25 +93,25 @@ namespace PixelSquare.TesseractOCR.Utility
             return result;
         }
 
-		public static byte[] FlipVertical(byte[] imageBuffer, int width, int height, int size = 3)
+        public static byte[] FlipVertical(byte[] imageBuffer, int width, int height, int size = 3)
         {
-			int dataLen = imageBuffer.Length;
-			byte[] result = new byte[dataLen];
+            int dataLen = imageBuffer.Length;
+            byte[] result = new byte[dataLen];
 
-			for(int i = 0; i < height; i++)
-			{
-				int j = height - i - 1;
-				Array.Copy(imageBuffer, i * width * size, result, j * width * size, width * size);
-			}
+            for(int i = 0; i < height; i++)
+            {
+                int j = height - i - 1;
+                Array.Copy(imageBuffer, i * width * size, result, j * width * size, width * size);
+            }
 
-			// Without width and height
-			//for(int i = 0; i < dataLen / size; i++)
-			//{
-			//	Array.Copy(imageData, result.Length - (i + 1) * size, result, i * size, size);
-			//}
+            // Without width and height
+            //for(int i = 0; i < dataLen / size; i++)
+            //{
+            //	Array.Copy(imageData, result.Length - (i + 1) * size, result, i * size, size);
+            //}
 
-			return result;
+            return result;
         }
-	}
-	
+    }
+    
 } // namespace PixelSquare

@@ -15,7 +15,7 @@ using System.Collections.Generic;
 
 namespace PixelSquare.TesseractOCR
 {
-	public interface IOpticalCharacterReader : System.IDisposable
+    public interface IOpticalCharacterReader : System.IDisposable
     {
         bool Initialize();
 
@@ -35,5 +35,5 @@ namespace PixelSquare.TesseractOCR
 
         string GetVersion();
     }
-	
+    
 } // namespace PixelSquare
