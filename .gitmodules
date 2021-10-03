@@ -1,3 +1,6 @@
 [submodule "tesseract"]
 	path = tesseract
 	url = https://github.com/tesseract-ocr/tesseract.git
+[submodule "tessdata_fast"]
+	path = tessdata_fast
+	url = https://github.com/tesseract-ocr/tessdata_fast.git
