@@ -4,7 +4,7 @@
 // </copyright>
 // <author>Anthony G.</author>
 // <date>2021/09/30</date>
-// <summary> TODO: Describe the file's implementation overview here </summary>
+// <summary>A bridge to connect the native library (unmanaged code) to C# (managed code)</summary>
 //------------------------------------------------------------------------------
 
 using UnityEngine;
@@ -19,59 +19,131 @@ namespace PixelSquare.TesseractOCR
     using Enums;
 
     /// <summary>
-    /// TODO: Describe the class outline here
+    /// A bridge to connect the native library (unmanaged code) to C# (managed code)
     /// </summary>
-    /// <remarks> Detailed information about the class. </remarks>
-    public class TesseractOCRBridge 
+    /// <remarks></remarks>
+    public static class TesseractOCRBridge 
     {
+        /// <summary>
+        /// Library Name
+        /// </summary>
         private const string DLL_NAME = "tesseract50";
 
+        /// <summary>
+        /// Creates a handle that points to the native class instance
+        /// </summary>
+        /// <returns>Pointer</returns>
         [DllImport(DLL_NAME, EntryPoint = "TessBaseAPICreate")]
-        protected static extern IntPtr CreateHandle();
+        public static extern IntPtr CreateHandle();
 
+        /// <summary>
+        /// Deletes the handle pointer
+        /// </summary>
+        /// <param name="handle">Handle Pointer</param>
         [DllImport(DLL_NAME, EntryPoint = "TessBaseAPIDelete")]
-        protected static extern void DeleteHandle(IntPtr handle);
+        public static extern void DeleteHandle(IntPtr handle);
 
+        /// <summary>
+        /// Clears the handle pointer
+        /// </summary>
+        /// <param name="handle">Handle Pointer</param>
         [DllImport(DLL_NAME, EntryPoint = "TessBaseAPIClear")]
-        protected static extern void ClearTesseract(IntPtr handle);
+        public static extern void ClearTesseract(IntPtr handle);
 
+        /// <summary>
+        /// Ends the handle pointer
+        /// </summary>
+        /// <param name="handle">Handle Pointer</param>
         [DllImport(DLL_NAME, EntryPoint = "TessBaseAPIEnd")]
-        protected static extern void EndTesseract(IntPtr handle);
+        public static extern void EndTesseract(IntPtr handle);
 
+        /// <summary>
+        /// Initializes Tesseract OCR's library
+        /// </summary>
+        /// <param name="handle">Handle Pointer</param>
+        /// <param name="datapath">Tess data directory</param>
+        /// <param name="language">Language ID</param>
+        /// <returns>0 = Success, -1 = Failed</returns>
         [DllImport(DLL_NAME, EntryPoint = "TessBaseAPIInit3")]
-        protected static extern int Initialize(IntPtr handle, string datapath, string language);
+        public static extern int Initialize(IntPtr handle, string datapath, string language);
 
+        /// <summary>
+        /// Initializes Tesseract OCR's library
+        /// </summary>
+        /// <param name="handle">Handle Pointer</param>
+        /// <param name="datapath">Tess data directory</param>
+        /// <param name="language">Language ID</param>
+        /// <param name="oem">OCR's Engine Mode</param>
+        /// <returns>0 = Success, -1 = Failed</returns>
         [DllImport(DLL_NAME, EntryPoint = "TessBaseAPIInit2")]
-        protected static extern int Initialize(IntPtr handle, string datapath, string language, int oem);
+        public static extern int Initialize(IntPtr handle, string datapath, string language, int oem);
 
+        /// <summary>
+        /// Sets the image data to be used
+        /// </summary>
+        /// <param name="handle">Handle Pointer</param>
+        /// <param name="imageData">Image data buffer</param>
+        /// <param name="width">Image Width</param>
+        /// <param name="height">Image Height</param>
+        /// <param name="bytesPerPixel">Image's BPP</param>
+        /// <param name="bytesPerLine">Image's BPL</param>
         [DllImport(DLL_NAME, EntryPoint = "TessBaseAPISetImage")]
-        protected static extern void SetImageData(IntPtr handle, byte[] imageData, int width, int height, int bytesPerPixel, int bytesPerLine);
+        public static extern void SetImageData(IntPtr handle, byte[] imageData, int width, int height, int bytesPerPixel, int bytesPerLine);
 
+        /// <summary>
+        /// Gets the text from the image in UTF-8 format
+        /// </summary>
+        /// <param name="handle">Handle Pointer</param>
+        /// <returns>Text Pointer</returns>
         [DllImport(DLL_NAME, EntryPoint = "TessBaseAPIGetUTF8Text")]
-        protected static extern IntPtr GetTextData(IntPtr handle);
+        public static extern IntPtr GetTextData(IntPtr handle);
 
+        /// <summary>
+        /// Sets the page segmentation mode.
+        /// </summary>
+        /// <param name="handle">Handle Pointer</param>
+        /// <param name="mode">Segmentation Mode</param>
         [DllImport(DLL_NAME, EntryPoint = "TessBaseAPISetPageSegMode")]
-        protected static extern void SetPageSegmentationMode(IntPtr handle, SegmentationMode mode);
+        public static extern void SetPageSegmentationMode(IntPtr handle, SegmentationMode mode);
 
+        /// <summary>
+        /// Gets the page segmentation mode
+        /// </summary>
+        /// <param name="handle">Handle Pointer</param>
+        /// <returns>Segmentation Mode</returns>
         [DllImport(DLL_NAME, EntryPoint = "TessBaseAPIGetPageSegMode")]
-        protected static extern int GetPageSegmentationMode(IntPtr handle);
+        public static extern int GetPageSegmentationMode(IntPtr handle);
 
+        /// <summary>
+        /// Gets the tess data directory
+        /// </summary>
+        /// <param name="handle">Handle Pointer</param>
+        /// <returns>Tess data directory string pointer</returns>
         [DllImport(DLL_NAME, EntryPoint = "TessBaseAPIGetDatapath")]
-        protected static extern IntPtr GetTesseractDataPath(IntPtr handle);
+        public static extern IntPtr GetTesseractDataPath(IntPtr handle);
 
+        /// <summary>
+        /// Gets the language used by tesseract
+        /// </summary>
+        /// <param name="handle">Handle Pointer</param>
+        /// <returns>Language string pointer</returns>
         [DllImport(DLL_NAME, EntryPoint = "TessBaseAPIGetInitLanguagesAsString")]
-        protected static extern IntPtr GetTesseractLanguage(IntPtr handle);
+        public static extern IntPtr GetTesseractLanguage(IntPtr handle);
 
         // TODO: Might crash sometimes. Still looking for a fix
         [DllImport(DLL_NAME, EntryPoint = "TessBaseAPIDetectOrientationScript")]
-        protected static extern bool OrientationScript(IntPtr handle, out int degrees, out float confidence, out string scriptName, out float scriptConfidence);
+        public static extern bool OrientationScript(IntPtr handle, out int degrees, out float confidence, out string scriptName, out float scriptConfidence);
 
         // TODO: Not getting the correct enum integer
         //[DllImport(DLL_NAME, EntryPoint = "TessBaseAPIOem")]
         //protected static extern UInt32 GetTesseractEngineMode();
 
+        /// <summary>
+        /// Gets tesseract's version
+        /// </summary>
+        /// <returns>Version string pointer</returns>
         [DllImport(DLL_NAME, EntryPoint = "TessVersion")]
-        protected static extern IntPtr GetTesseractVersion();
+        public static extern IntPtr GetTesseractVersion();
     }
     
 } // namespace PixelSquare
