@@ -252,7 +252,6 @@ namespace PixelSquare.TesseractOCR
             {
                 TesseractOCRBridge.EndTesseract(m_Handle);
                 TesseractOCRBridge.DeleteHandle(m_Handle);
-                Marshal.Release(m_Handle);
                 m_Handle = IntPtr.Zero;
             }
         }
