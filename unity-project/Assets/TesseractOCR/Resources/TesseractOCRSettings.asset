@@ -1,0 +1,641 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d73735d9e6e7da469760bf5ec8f19a4, type: 3}
+  m_Name: TesseractOCRSettings
+  m_EditorClassIdentifier: 
+  m_TessdataDirectory: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast
+  m_TessdataList:
+  - selected: 0
+    name: afr.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\afr.traineddata
+    fileSize: 2652786
+    fileSizeString: 2.53 MB
+  - selected: 0
+    name: amh.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\amh.traineddata
+    fileSize: 5470094
+    fileSizeString: 5.22 MB
+  - selected: 0
+    name: ara.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\ara.traineddata
+    fileSize: 1432056
+    fileSizeString: 1.37 MB
+  - selected: 0
+    name: asm.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\asm.traineddata
+    fileSize: 2045427
+    fileSizeString: 1.95 MB
+  - selected: 0
+    name: aze.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\aze.traineddata
+    fileSize: 3524799
+    fileSizeString: 3.36 MB
+  - selected: 0
+    name: aze_cyrl.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\aze_cyrl.traineddata
+    fileSize: 1943672
+    fileSizeString: 1.85 MB
+  - selected: 0
+    name: bel.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\bel.traineddata
+    fileSize: 3692098
+    fileSizeString: 3.52 MB
+  - selected: 0
+    name: ben.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\ben.traineddata
+    fileSize: 855841
+    fileSizeString: 835.78 KB
+  - selected: 0
+    name: bod.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\bod.traineddata
+    fileSize: 1966440
+    fileSizeString: 1.88 MB
+  - selected: 0
+    name: bos.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\bos.traineddata
+    fileSize: 2498242
+    fileSizeString: 2.38 MB
+  - selected: 0
+    name: bre.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\bre.traineddata
+    fileSize: 6335007
+    fileSizeString: 6.04 MB
+  - selected: 0
+    name: bul.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\bul.traineddata
+    fileSize: 1675212
+    fileSizeString: 1.6 MB
+  - selected: 0
+    name: cat.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\cat.traineddata
+    fileSize: 1146012
+    fileSizeString: 1.09 MB
+  - selected: 0
+    name: ceb.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\ceb.traineddata
+    fileSize: 716214
+    fileSizeString: 699.43 KB
+  - selected: 0
+    name: ces.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\ces.traineddata
+    fileSize: 3795684
+    fileSizeString: 3.62 MB
+  - selected: 0
+    name: chi_sim.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\chi_sim.traineddata
+    fileSize: 2469156
+    fileSizeString: 2.35 MB
+  - selected: 0
+    name: chi_sim_vert.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\chi_sim_vert.traineddata
+    fileSize: 1927902
+    fileSizeString: 1.84 MB
+  - selected: 0
+    name: chi_tra.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\chi_tra.traineddata
+    fileSize: 2366642
+    fileSizeString: 2.26 MB
+  - selected: 0
+    name: chi_tra_vert.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\chi_tra_vert.traineddata
+    fileSize: 1824756
+    fileSizeString: 1.74 MB
+  - selected: 0
+    name: chr.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\chr.traineddata
+    fileSize: 374944
+    fileSizeString: 366.16 KB
+  - selected: 0
+    name: cos.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\cos.traineddata
+    fileSize: 2299099
+    fileSizeString: 2.19 MB
+  - selected: 0
+    name: cym.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\cym.traineddata
+    fileSize: 2208919
+    fileSizeString: 2.11 MB
+  - selected: 0
+    name: dan.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\dan.traineddata
+    fileSize: 2580059
+    fileSizeString: 2.46 MB
+  - selected: 0
+    name: deu.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\deu.traineddata
+    fileSize: 1525436
+    fileSizeString: 1.45 MB
+  - selected: 0
+    name: div.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\div.traineddata
+    fileSize: 1774535
+    fileSizeString: 1.69 MB
+  - selected: 0
+    name: dzo.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\dzo.traineddata
+    fileSize: 449596
+    fileSizeString: 439.06 KB
+  - selected: 0
+    name: ell.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\ell.traineddata
+    fileSize: 1419514
+    fileSizeString: 1.35 MB
+  - selected: 1
+    name: eng.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\eng.traineddata
+    fileSize: 4113088
+    fileSizeString: 3.92 MB
+  - selected: 0
+    name: enm.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\enm.traineddata
+    fileSize: 3101551
+    fileSizeString: 2.96 MB
+  - selected: 0
+    name: epo.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\epo.traineddata
+    fileSize: 4728393
+    fileSizeString: 4.51 MB
+  - selected: 0
+    name: equ.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\equ.traineddata
+    fileSize: 2251950
+    fileSizeString: 2.15 MB
+  - selected: 0
+    name: est.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\est.traineddata
+    fileSize: 4458101
+    fileSizeString: 4.25 MB
+  - selected: 0
+    name: eus.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\eus.traineddata
+    fileSize: 5175921
+    fileSizeString: 4.94 MB
+  - selected: 0
+    name: fao.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\fao.traineddata
+    fileSize: 3439772
+    fileSizeString: 3.28 MB
+  - selected: 0
+    name: fas.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\fas.traineddata
+    fileSize: 431500
+    fileSizeString: 421.39 KB
+  - selected: 0
+    name: fil.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\fil.traineddata
+    fileSize: 1841715
+    fileSizeString: 1.76 MB
+  - selected: 0
+    name: fin.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\fin.traineddata
+    fileSize: 7865732
+    fileSizeString: 7.5 MB
+  - selected: 0
+    name: fra.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\fra.traineddata
+    fileSize: 1130365
+    fileSizeString: 1.08 MB
+  - selected: 0
+    name: frk.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\frk.traineddata
+    fileSize: 6423052
+    fileSizeString: 6.13 MB
+  - selected: 0
+    name: frm.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\frm.traineddata
+    fileSize: 2024948
+    fileSizeString: 1.93 MB
+  - selected: 0
+    name: fry.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\fry.traineddata
+    fileSize: 1906018
+    fileSizeString: 1.82 MB
+  - selected: 0
+    name: gla.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\gla.traineddata
+    fileSize: 3068307
+    fileSizeString: 2.93 MB
+  - selected: 0
+    name: gle.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\gle.traineddata
+    fileSize: 1181824
+    fileSizeString: 1.13 MB
+  - selected: 0
+    name: glg.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\glg.traineddata
+    fileSize: 2554555
+    fileSizeString: 2.44 MB
+  - selected: 0
+    name: grc.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\grc.traineddata
+    fileSize: 2246328
+    fileSizeString: 2.14 MB
+  - selected: 0
+    name: guj.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\guj.traineddata
+    fileSize: 1418394
+    fileSizeString: 1.35 MB
+  - selected: 0
+    name: hat.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\hat.traineddata
+    fileSize: 1976902
+    fileSizeString: 1.89 MB
+  - selected: 0
+    name: heb.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\heb.traineddata
+    fileSize: 961404
+    fileSizeString: 938.87 KB
+  - selected: 0
+    name: hin.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\hin.traineddata
+    fileSize: 1122751
+    fileSizeString: 1.07 MB
+  - selected: 0
+    name: hrv.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\hrv.traineddata
+    fileSize: 4103348
+    fileSizeString: 3.91 MB
+  - selected: 0
+    name: hun.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\hun.traineddata
+    fileSize: 5296273
+    fileSizeString: 5.05 MB
+  - selected: 0
+    name: hye.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\hye.traineddata
+    fileSize: 3463717
+    fileSizeString: 3.3 MB
+  - selected: 0
+    name: iku.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\iku.traineddata
+    fileSize: 2802266
+    fileSizeString: 2.67 MB
+  - selected: 0
+    name: ind.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\ind.traineddata
+    fileSize: 1122661
+    fileSizeString: 1.07 MB
+  - selected: 0
+    name: isl.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\isl.traineddata
+    fileSize: 2278973
+    fileSizeString: 2.17 MB
+  - selected: 0
+    name: ita.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\ita.traineddata
+    fileSize: 2701314
+    fileSizeString: 2.58 MB
+  - selected: 0
+    name: ita_old.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\ita_old.traineddata
+    fileSize: 3286123
+    fileSizeString: 3.13 MB
+  - selected: 0
+    name: jav.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\jav.traineddata
+    fileSize: 2982741
+    fileSizeString: 2.84 MB
+  - selected: 1
+    name: jpn.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\jpn.traineddata
+    fileSize: 2471260
+    fileSizeString: 2.36 MB
+  - selected: 0
+    name: jpn_vert.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\jpn_vert.traineddata
+    fileSize: 3037480
+    fileSizeString: 2.9 MB
+  - selected: 0
+    name: kan.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\kan.traineddata
+    fileSize: 3608331
+    fileSizeString: 3.44 MB
+  - selected: 0
+    name: kat.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\kat.traineddata
+    fileSize: 2524769
+    fileSizeString: 2.41 MB
+  - selected: 0
+    name: kat_old.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\kat_old.traineddata
+    fileSize: 423167
+    fileSizeString: 413.25 KB
+  - selected: 0
+    name: kaz.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\kaz.traineddata
+    fileSize: 4734644
+    fileSizeString: 4.52 MB
+  - selected: 0
+    name: khm.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\khm.traineddata
+    fileSize: 1446926
+    fileSizeString: 1.38 MB
+  - selected: 0
+    name: kir.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\kir.traineddata
+    fileSize: 9928497
+    fileSizeString: 9.47 MB
+  - selected: 0
+    name: kmr.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\kmr.traineddata
+    fileSize: 3568615
+    fileSizeString: 3.4 MB
+  - selected: 0
+    name: kor.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\kor.traineddata
+    fileSize: 1677415
+    fileSizeString: 1.6 MB
+  - selected: 0
+    name: kor_vert.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\kor_vert.traineddata
+    fileSize: 1113715
+    fileSizeString: 1.06 MB
+  - selected: 0
+    name: lao.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\lao.traineddata
+    fileSize: 6386744
+    fileSizeString: 6.09 MB
+  - selected: 0
+    name: lat.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\lat.traineddata
+    fileSize: 3187463
+    fileSizeString: 3.04 MB
+  - selected: 0
+    name: lav.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\lav.traineddata
+    fileSize: 2717247
+    fileSizeString: 2.59 MB
+  - selected: 0
+    name: lit.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\lit.traineddata
+    fileSize: 3154896
+    fileSizeString: 3.01 MB
+  - selected: 0
+    name: ltz.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\ltz.traineddata
+    fileSize: 2606426
+    fileSizeString: 2.49 MB
+  - selected: 0
+    name: mal.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\mal.traineddata
+    fileSize: 5275996
+    fileSizeString: 5.03 MB
+  - selected: 0
+    name: mar.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\mar.traineddata
+    fileSize: 2118233
+    fileSizeString: 2.02 MB
+  - selected: 0
+    name: mkd.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\mkd.traineddata
+    fileSize: 1600188
+    fileSizeString: 1.53 MB
+  - selected: 0
+    name: mlt.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\mlt.traineddata
+    fileSize: 2308796
+    fileSizeString: 2.2 MB
+  - selected: 0
+    name: mon.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\mon.traineddata
+    fileSize: 2137042
+    fileSizeString: 2.04 MB
+  - selected: 0
+    name: mri.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\mri.traineddata
+    fileSize: 862973
+    fileSizeString: 842.75 KB
+  - selected: 0
+    name: msa.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\msa.traineddata
+    fileSize: 1747801
+    fileSizeString: 1.67 MB
+  - selected: 0
+    name: mya.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\mya.traineddata
+    fileSize: 4640561
+    fileSizeString: 4.43 MB
+  - selected: 0
+    name: nep.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\nep.traineddata
+    fileSize: 1002911
+    fileSizeString: 979.41 KB
+  - selected: 0
+    name: nld.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\nld.traineddata
+    fileSize: 6050296
+    fileSizeString: 5.77 MB
+  - selected: 0
+    name: nor.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\nor.traineddata
+    fileSize: 3610079
+    fileSizeString: 3.44 MB
+  - selected: 0
+    name: oci.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\oci.traineddata
+    fileSize: 6322087
+    fileSizeString: 6.03 MB
+  - selected: 0
+    name: ori.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\ori.traineddata
+    fileSize: 1480066
+    fileSizeString: 1.41 MB
+  - selected: 0
+    name: osd.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\osd.traineddata
+    fileSize: 10562727
+    fileSizeString: 10.07 MB
+  - selected: 0
+    name: pan.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\pan.traineddata
+    fileSize: 497721
+    fileSizeString: 486.06 KB
+  - selected: 0
+    name: pol.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\pol.traineddata
+    fileSize: 4765518
+    fileSizeString: 4.54 MB
+  - selected: 0
+    name: por.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\por.traineddata
+    fileSize: 1982756
+    fileSizeString: 1.89 MB
+  - selected: 0
+    name: pus.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\pus.traineddata
+    fileSize: 1772087
+    fileSizeString: 1.69 MB
+  - selected: 0
+    name: que.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\que.traineddata
+    fileSize: 5026336
+    fileSizeString: 4.79 MB
+  - selected: 0
+    name: ron.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\ron.traineddata
+    fileSize: 2376323
+    fileSizeString: 2.27 MB
+  - selected: 0
+    name: rus.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\rus.traineddata
+    fileSize: 3861738
+    fileSizeString: 3.68 MB
+  - selected: 0
+    name: san.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\san.traineddata
+    fileSize: 12404677
+    fileSizeString: 11.83 MB
+  - selected: 0
+    name: sin.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\sin.traineddata
+    fileSize: 1727413
+    fileSizeString: 1.65 MB
+  - selected: 0
+    name: slk.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\slk.traineddata
+    fileSize: 4427661
+    fileSizeString: 4.22 MB
+  - selected: 0
+    name: slv.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\slv.traineddata
+    fileSize: 3003829
+    fileSizeString: 2.86 MB
+  - selected: 0
+    name: snd.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\snd.traineddata
+    fileSize: 1694035
+    fileSizeString: 1.62 MB
+  - selected: 0
+    name: spa.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\spa.traineddata
+    fileSize: 2294433
+    fileSizeString: 2.19 MB
+  - selected: 0
+    name: spa_old.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\spa_old.traineddata
+    fileSize: 2894755
+    fileSizeString: 2.76 MB
+  - selected: 0
+    name: sqi.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\sqi.traineddata
+    fileSize: 1874705
+    fileSizeString: 1.79 MB
+  - selected: 0
+    name: srp.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\srp.traineddata
+    fileSize: 2149931
+    fileSizeString: 2.05 MB
+  - selected: 0
+    name: srp_latn.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\srp_latn.traineddata
+    fileSize: 3281787
+    fileSizeString: 3.13 MB
+  - selected: 0
+    name: sun.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\sun.traineddata
+    fileSize: 1369500
+    fileSizeString: 1.31 MB
+  - selected: 0
+    name: swa.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\swa.traineddata
+    fileSize: 2167651
+    fileSizeString: 2.07 MB
+  - selected: 0
+    name: swe.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\swe.traineddata
+    fileSize: 4167034
+    fileSizeString: 3.97 MB
+  - selected: 0
+    name: syr.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\syr.traineddata
+    fileSize: 2207208
+    fileSizeString: 2.1 MB
+  - selected: 0
+    name: tam.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\tam.traineddata
+    fileSize: 3237963
+    fileSizeString: 3.09 MB
+  - selected: 0
+    name: tat.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\tat.traineddata
+    fileSize: 1072896
+    fileSizeString: 1.02 MB
+  - selected: 0
+    name: tel.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\tel.traineddata
+    fileSize: 2769654
+    fileSizeString: 2.64 MB
+  - selected: 0
+    name: tgk.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\tgk.traineddata
+    fileSize: 2602685
+    fileSizeString: 2.48 MB
+  - selected: 0
+    name: tha.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\tha.traineddata
+    fileSize: 1072600
+    fileSizeString: 1.02 MB
+  - selected: 0
+    name: tir.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\tir.traineddata
+    fileSize: 378822
+    fileSizeString: 369.94 KB
+  - selected: 0
+    name: ton.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\ton.traineddata
+    fileSize: 947249
+    fileSizeString: 925.05 KB
+  - selected: 0
+    name: tur.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\tur.traineddata
+    fileSize: 4550554
+    fileSizeString: 4.34 MB
+  - selected: 0
+    name: uig.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\uig.traineddata
+    fileSize: 2794272
+    fileSizeString: 2.66 MB
+  - selected: 0
+    name: ukr.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\ukr.traineddata
+    fileSize: 3825102
+    fileSizeString: 3.65 MB
+  - selected: 0
+    name: urd.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\urd.traineddata
+    fileSize: 1398718
+    fileSizeString: 1.33 MB
+  - selected: 0
+    name: uzb.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\uzb.traineddata
+    fileSize: 6470703
+    fileSizeString: 6.17 MB
+  - selected: 0
+    name: uzb_cyrl.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\uzb_cyrl.traineddata
+    fileSize: 1563501
+    fileSizeString: 1.49 MB
+  - selected: 0
+    name: vie.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\vie.traineddata
+    fileSize: 531275
+    fileSizeString: 518.82 KB
+  - selected: 0
+    name: yid.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\yid.traineddata
+    fileSize: 545606
+    fileSizeString: 532.82 KB
+  - selected: 0
+    name: yor.traineddata
+    path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\yor.traineddata
+    fileSize: 963400
+    fileSizeString: 940.82 KB
