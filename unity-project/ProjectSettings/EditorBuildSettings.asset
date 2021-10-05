@@ -8,4 +8,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/TesseractTextureDemo.unity
     guid: 9099f95c9e328214f82b5ad88c8fb7b3
+  - enabled: 0
+    path: Assets/Scenes/TesseractCameraDemo.unity
+    guid: 963b81c58ae99bc49a4cc0464c9b5901
   m_configObjects: {}
