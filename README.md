@@ -8,6 +8,7 @@ A port of Tesseract OCR project to Unity Engine.
 - Unity Editor 2020.3.19f1
 
 **NOTE**: Tesseract android library included was built for ARMv7 only.
+
 **NOTE**: Tesseract windows / editor library included was built for x64 only.
 
 ## License
