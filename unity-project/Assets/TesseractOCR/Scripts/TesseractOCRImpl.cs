@@ -155,7 +155,8 @@ namespace PixelSquare.TesseractOCR
 
             if(m_Handle != IntPtr.Zero)
             {
-                imageData = TesseractOCRUtility.FlipVertical(imageData, width, height, BYTES_PER_PIXEL);
+                Color32[] colorBuffer = TesseractOCRUtility.ImageFlipVertical(imageData, width, height);
+                imageData = TesseractOCRUtility.Color32ToBytes(colorBuffer);
                 TesseractOCRBridge.SetImageData(m_Handle, imageData, width, height, BYTES_PER_PIXEL, BYTES_PER_PIXEL * width);
             }
         }

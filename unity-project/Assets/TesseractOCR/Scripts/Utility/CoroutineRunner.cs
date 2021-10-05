@@ -4,7 +4,7 @@
 // </copyright>
 // <author>Anthony G.</author>
 // <date>2021/10/03</date>
-// <summary> TODO: Describe the file's implementation overview here </summary>
+// <summary>Utility that runs a coroutine on a non-monobehavior script</summary>
 //------------------------------------------------------------------------------
 
 using UnityEngine;
@@ -15,11 +15,16 @@ using System.Collections.Generic;
 namespace PixelSquare.TesseractOCR.Utility
 {
     /// <summary>
-    /// TODO: Describe the class outline here
+    /// Utility that runs a coroutine on a non-monobehavior script
     /// </summary>
-    /// <remarks> Detailed information about the class. </remarks>
+    /// <remarks></remarks>
     public class CoroutineRunner : MonoBehaviour
     {
+        /// <summary>
+        /// Runs a coroutine
+        /// </summary>
+        /// <param name="coroutine">Coroutine</param>
+        /// <returns>Coroutine</returns>
         public static Coroutine RunCoroutine(IEnumerator coroutine)
         {
             GameObject go = new GameObject("runner");
@@ -28,6 +33,12 @@ namespace PixelSquare.TesseractOCR.Utility
             return runner.StartCoroutine(runner.UpdateRunner(coroutine));
         }
 
+        /// <summary>
+        /// Handles the update of the coroutine
+        /// And destroys it after its done
+        /// </summary>
+        /// <param name="coroutine">Coroutine</param>
+        /// <returns>IEnumerator</returns>
         private IEnumerator UpdateRunner(IEnumerator coroutine)
         {
             while(coroutine.MoveNext())

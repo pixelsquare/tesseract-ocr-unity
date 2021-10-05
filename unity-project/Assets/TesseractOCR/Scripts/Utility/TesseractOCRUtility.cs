@@ -46,109 +46,201 @@ namespace PixelSquare.TesseractOCR.Utility
             return string.Format("{0:0.##} {1}", len, sizeSuffix[order]);
         }
 
-        //public static byte[] ParseImageBytes(Image image)
-        //{
-        //    Debug.Assert(image, "Image must not be nulled!");
-        //    return ParseImageBytes(image.sprite);
-        //}
-
-        //public static byte[] ParseImageBytes(RawImage image)
-        //{
-        //    Debug.Assert(image, "Image must not be nulled!");
-        //    return ParseImageBytes(image.mainTexture);
-        //}
-
-        //public static byte[] ParseImageBytes(Sprite sprite)
-        //{
-        //    Debug.Assert(sprite, "Sprite must not be nulled!");
-        //    return ParseImageBytes(sprite.texture);
-        //}
-
-        //public static byte[] ParseImageBytes(Texture texture)
-        //{
-        //    Debug.Assert(texture, "Texture must not be nulled!");
-        //    return ParseImageBytes((Texture2D)texture);
-        //}
-
-        //public static byte[] ParseImageBytes(Texture2D texture)
-        //{
-        //    Debug.Assert(texture, "Texture must not be nulled!");
-        //    return ParseImageBytes(texture.GetRawTextureData(), texture.width, texture.height);
-        //}
-
-        //public static byte[] ParseImageBytes(byte[] imageData, int width, int height)
-        //{
-        //    return imageData;
-        //}
-
         /// <summary>
-        /// Flips the texture horizontally
+        /// Convert byte array to color32 array
         /// </summary>
-        /// <param name="imageBuffer">Image data buffer</param>
-        /// <param name="width">Image Width</param>
-        /// <param name="height">Image Height</param>
-        /// <param name="bytesPerPixel">Image bytes per pixel</param>
-        /// <returns>Flipped Image Data Buffer</returns>
-        public static byte[] FlipHorizontal(byte[] imageBuffer, int width, int height, int bytesPerPixel = 3)
+        /// <param name="imageBuffer">Image Buffer</param>
+        /// <param name="bytesPerPixel">Bytes Per Pixel</param>
+        /// <returns>Color32 Array</returns>
+        public static Color32[] BytesToColor32(byte[] imageBuffer, int bytesPerPixel = 3)
         {
-            int dataLen = imageBuffer.Length;
-            byte[] result = new byte[dataLen];
+            int bufferLen = imageBuffer.Length / bytesPerPixel;
+            Color32[] result = new Color32[bufferLen];
 
-            List<byte> r = new List<byte>();
-            List<byte> tmp = new List<byte>();
-            for(int i = 0; i < dataLen / bytesPerPixel; i++)
+            int x = 0;
+            for(int i = 0; i < imageBuffer.Length; i += bytesPerPixel)
             {
-                for(int j = 0; j < bytesPerPixel; j++)
-                {
-                    tmp.Add(imageBuffer[i + j]);
-                }
-
-                if(tmp.Count >= width * bytesPerPixel)
-                {
-                    tmp.Reverse();
-                    r.AddRange(tmp);
-                    tmp.Clear();
-                }
+                result[x++] = new Color32(imageBuffer[i], imageBuffer[i + 1], imageBuffer[i + 2], 0xFF);
             }
-
-            result = r.ToArray();
-
-            //// TODO: FIX
-            //for(int i = 0; i < dataLen / bytesPerPixel; i++)
-            //{
-            //    for(int j = 0; j < bytesPerPixel; j++)
-            //    {
-            //        result[i * bytesPerPixel + j] = imageBuffer[(i + 1) * bytesPerPixel - j - 1];
-            //    }
-            //}
 
             return result;
         }
 
         /// <summary>
-        /// Flips the texture vertically
+        /// Convert color32 array to byte array
         /// </summary>
-        /// <param name="imageBuffer">Image data buffer</param>
-        /// <param name="width">Image Width</param>
-        /// <param name="height">Image Height</param>
-        /// <param name="bytesPerPixel">Image bytes per pixel</param>
-        /// <returns>Flipped Image Data Buffer</returns>
-        public static byte[] FlipVertical(byte[] imageBuffer, int width, int height, int bytesPerPixel = 3)
+        /// <param name="colorBuffer">Color32 Buffer</param>
+        /// <param name="bytesPerPixel">Bytes Per Pixel</param>
+        /// <returns>Byte Array</returns>
+        public static byte[] Color32ToBytes(Color32[] colorBuffer, int bytesPerPixel = 3)
         {
-            int dataLen = imageBuffer.Length;
-            byte[] result = new byte[dataLen];
+            int bufferLen = colorBuffer.Length * bytesPerPixel;
+            byte[] result = new byte[bufferLen];
 
-            for(int i = 0; i < height; i++)
+            int x = 0;
+            for(int i = 0; i < bufferLen; i += 3)
             {
-                int j = height - i - 1;
-                Array.Copy(imageBuffer, i * width * bytesPerPixel, result, j * width * bytesPerPixel, width * bytesPerPixel);
+                result[i] = colorBuffer[x].r;
+                result[i + 1] = colorBuffer[x].g;
+                result[i + 2] = colorBuffer[x].b;
+                x++;
             }
 
-            // Without width and height
-            //for(int i = 0; i < dataLen / size; i++)
-            //{
-            //	Array.Copy(imageData, result.Length - (i + 1) * size, result, i * size, size);
-            //}
+            return result;
+        }
+
+        /// <summary>
+        /// Rotate image in clockwise direction
+        /// </summary>
+        /// <param name="imageBuffer">Image Buffer</param>
+        /// <param name="width">Image Width</param>
+        /// <param name="height">Image Height</param>
+        /// <param name="bytesPerPixel">Bytes Per Pixel</param>
+        /// <returns>Color32 Array</returns>
+        public static Color32[] ImageRotateClockwise(byte[] imageBuffer, int width, int height, int bytesPerPixel = 3)
+        {
+            return ImageRotateClockwise(BytesToColor32(imageBuffer, bytesPerPixel), width, height, bytesPerPixel);
+        }
+
+        /// <summary>
+        /// Rotate image in clockwise direction
+        /// </summary>
+        /// <param name="colorBuffer">Color Buffer</param>
+        /// <param name="width">Image Width</param>
+        /// <param name="height">Image Height</param>
+        /// <param name="bytesPerPixel">Bytes Per Pixel</param>
+        /// <returns>Color32 Array</returns>
+        public static Color32[] ImageRotateClockwise(Color32[] colorBuffer, int width, int height, int bytesPerPixel = 3)
+        {
+            Color32[] result = new Color32[width * height];
+
+            int index = 0;
+            for(int i = 0; i < width; i++)
+            {
+                for(int j = 0; j < height; j++)
+                {
+                    int sourceIdx = (width * (j + 1)) - (i + 1);
+                    result[index] = colorBuffer[sourceIdx];
+                    index++;
+                }
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Rotate image in counter clockwise direction
+        /// </summary>
+        /// <param name="imageBuffer">Image Buffer</param>
+        /// <param name="width">Image Width</param>
+        /// <param name="height">Image Height</param>
+        /// <param name="bytesPerPixel">Bytes Per Pixel</param>
+        /// <returns>Color32 Array</returns>
+        public static Color32[] ImageRotateCounterClockwise(byte[] imageBuffer, int width, int height, int bytesPerPixel = 3)
+        {
+            return ImageRotateCounterClockwise(BytesToColor32(imageBuffer, bytesPerPixel), width, height, bytesPerPixel);
+        }
+
+        /// <summary>
+        /// Rotate image in counter clockwise direction
+        /// </summary>
+        /// <param name="colorBuffer">Color Buffer</param>
+        /// <param name="width">Image Width</param>
+        /// <param name="height">Image Height</param>
+        /// <param name="bytesPerPixel">Bytes Per Pixel</param>
+        /// <returns>Color32 Array</returns>
+        public static Color32[] ImageRotateCounterClockwise(Color32[] colorBuffer, int width, int height, int bytesPerPixel = 3)
+        {
+            Color32[] result = new Color32[width * height];
+
+            int index = 0;
+            for(int i = 0; i < width; i++)
+            {
+                for(int j = 0; j < height; j++)
+                {
+                    int sourceIdx = (width * (height - j)) - width + i;
+                    result[index] = colorBuffer[sourceIdx];
+                    index++;
+                }
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Flips an image horizontally
+        /// </summary>
+        /// <param name="imageBuffer">Image Buffer</param>
+        /// <param name="width">Image Width</param>
+        /// <param name="height">Image Height</param>
+        /// <param name="bytesPerPixel">Bytes Per Pixel</param>
+        /// <returns>Color32 Array</returns>
+        public static Color32[] ImageFlipHorizontal(byte[] imageBuffer, int width, int height, int bytesPerPixel = 3)
+        {
+            return ImageFlipHorizontal(BytesToColor32(imageBuffer, bytesPerPixel), width, height, bytesPerPixel);
+        }
+
+        /// <summary>
+        /// Flips an image horizontally
+        /// </summary>
+        /// <param name="colorBuffer">Color Buffer</param>
+        /// <param name="width">Image Width</param>
+        /// <param name="height">Image Height</param>
+        /// <param name="bytesPerPixel">Bytes Per Pixel</param>
+        /// <returns>Color32 Array</returns>
+        public static Color32[] ImageFlipHorizontal(Color32[] colorBuffer, int width, int height, int bytesPerPixel = 3)
+        {
+            Color32[] result = new Color32[width * height];
+
+            int index = 0;
+            for(int i = 0; i < height; i++)
+            {
+                for(int j = 0; j < width; j++)
+                {
+                    int sourceIdx = width - j - 1 + (width * i);
+                    result[index] = colorBuffer[sourceIdx];
+                    index++;
+                }
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Flips an image vertically
+        /// </summary>
+        /// <param name="imageBuffer">Image Buffer</param>
+        /// <param name="width">Image Width</param>
+        /// <param name="height">Image Height</param>
+        /// <param name="bytesPerPixel">Bytes Per Pixel</param>
+        /// <returns>Color32 Array</returns>
+        public static Color32[] ImageFlipVertical(byte[] imageBuffer, int width, int height, int bytesPerPixel = 3)
+        {
+            return ImageFlipVertical(BytesToColor32(imageBuffer, bytesPerPixel), width, height, bytesPerPixel);
+        }
+
+        /// <summary>
+        /// Flips an image vertically
+        /// </summary>
+        /// <param name="colorBuffer">Color Buffer</param>
+        /// <param name="width">Image Width</param>
+        /// <param name="height">Image Height</param>
+        /// <param name="bytesPerPixel">Bytes Per Pixel</param>
+        /// <returns>Color32 Array</returns>
+        public static Color32[] ImageFlipVertical(Color32[] colorBuffer, int width, int height, int bytesPerPixel = 3)
+        {
+            Color32[] result = new Color32[width * height];
+
+            int index = 0;
+            for(int i = 0; i < height; i++)
+            {
+                for(int j = 0; j < width; j++)
+                {
+                    int sourceIdx = (height * width) - ((i + 1) * width - j);
+                    result[index] = colorBuffer[sourceIdx];
+                    index++;
+                }
+            }
 
             return result;
         }
