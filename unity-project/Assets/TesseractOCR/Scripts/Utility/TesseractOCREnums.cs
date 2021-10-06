@@ -12,7 +12,7 @@ namespace PixelSquare.TesseractOCR.Enums
     /// <summary>
     /// Engine Mode
     /// </summary>
-    public enum EngineMode : uint
+    public enum OCREngineMode : uint
     {
         TESSERACT_ONLY = 0,
         LSTM_ONLY,
@@ -71,6 +71,18 @@ namespace PixelSquare.TesseractOCR.Enums
         LEFT_TO_RIGHT = 0,
         RIGHT_TO_LEFT,
         TOP_TO_BOTTOM
+    }
+
+    /// <summary>
+    /// Page Iterator Level
+    /// </summary>
+    public enum PageIteratorLevel : uint
+    {
+        BLOCK = 0,
+        PARAGRAPH,
+        TEXTLINE,
+        WORD,
+        SYMBOL
     }
 
 } // namespace PixelSquare
