@@ -4,7 +4,7 @@
 // </copyright>
 // <author>Anthony G.</author>
 // <date>2021/09/30</date>
-// <summary>A bridge to connect the native library (unmanaged code) to C# (managed code)</summary>
+// <summary>A bridge that connects the native library (unmanaged code) to C# (managed code)</summary>
 //------------------------------------------------------------------------------
 
 using UnityEngine;
@@ -36,7 +36,7 @@ namespace PixelSquare.TesseractOCR
         /// </summary>
         /// <returns>Pointer</returns>
         [DllImport(DLL_NAME, EntryPoint = "TessBaseAPICreate")]
-        public static extern IntPtr CreaateTesseractHandle();
+        public static extern IntPtr CreateTesseractHandle();
 
         /// <summary>
         /// Deletes the handle pointer
@@ -110,6 +110,16 @@ namespace PixelSquare.TesseractOCR
         public static extern IntPtr GetTextData(IntPtr tesseractHandle);
 
         /// <summary>
+        /// Recognizes the image if the library can parse it
+        /// Monitor handle can be nulled
+        /// </summary>
+        /// <param name="tesseractHandle">Tesseract Handle Pointer</param>
+        /// <param name="monitorHandle">Monitor Handle Pointer</param>
+        /// <returns>0 = success, -1 = failed</returns>
+        [DllImport(DLL_NAME, EntryPoint = "TessBaseAPIRecognize")]
+        public static extern int Recognize(IntPtr tesseractHandle, IntPtr monitorHandle);
+
+        /// <summary>
         /// Sets the page segmentation mode.
         /// </summary>
         /// <param name="tesseractHandle">Tesseract Handle Pointer</param>
@@ -126,22 +136,12 @@ namespace PixelSquare.TesseractOCR
         public static extern SegmentationMode GetPageSegmentationMode(IntPtr tesseractHandle);
 
         /// <summary>
-        /// Prints all the variables used by the library
-        /// Saves at the project root directory
+        /// Gets the OCR Engine Mode
         /// </summary>
         /// <param name="tesseractHandle">Tesseract Handle Pointer</param>
-        /// <param name="filename">Filename</param>
-        /// <returns></returns>
-        [DllImport(DLL_NAME, EntryPoint = "TessBaseAPIPrintVariablesToFile")]
-        public static extern bool PrintVariablesToFile(IntPtr tesseractHandle, string filename);
-
-        /// <summary>
-        /// Gets the tess data directory
-        /// </summary>
-        /// <param name="tesseractHandle">Tesseract Handle Pointer</param>
-        /// <returns>Tess data directory string pointer</returns>
-        [DllImport(DLL_NAME, EntryPoint = "TessBaseAPIGetDatapath")]
-        public static extern IntPtr GetTesseractDataPath(IntPtr tesseractHandle);
+        /// <returns>OCR Engine Mode</returns>
+        [DllImport(DLL_NAME, EntryPoint = "TessBaseAPIOem")]
+        public static extern OCREngineMode GetTesseractEngineMode(IntPtr tesseractHandle);
 
         /// <summary>
         /// Gets the language used by tesseract
@@ -151,6 +151,14 @@ namespace PixelSquare.TesseractOCR
         [DllImport(DLL_NAME, EntryPoint = "TessBaseAPIGetInitLanguagesAsString")]
         public static extern IntPtr GetTesseractLanguage(IntPtr tesseractHandle);
 
+        /// <summary>
+        /// Gets the tess data directory
+        /// </summary>
+        /// <param name="tesseractHandle">Tesseract Handle Pointer</param>
+        /// <returns>Tess data directory string pointer</returns>
+        [DllImport(DLL_NAME, EntryPoint = "TessBaseAPIGetDatapath")]
+        public static extern IntPtr GetTesseractDataPath(IntPtr tesseractHandle);
+
         //// WIP: Might crash sometimes. Still looking for a fix. Only availble on Legacy Engine
         //[DllImport(DLL_NAME, EntryPoint = "TessBaseAPIDetectOrientationScript")]
         //public static extern bool OrientationScript(IntPtr tesseractHandle, out int degrees, out float confidence, out string scriptName, out float scriptConfidence);
@@ -159,23 +167,6 @@ namespace PixelSquare.TesseractOCR
         //[DllImport(DLL_NAME, EntryPoint = "TessDeleteText")]
         //public static extern void DeleteText(string text);
 
-        /// <summary>
-        /// Recognizes the image if the library can parse it
-        /// Monitor handle can be nulled
-        /// </summary>
-        /// <param name="tesseractHandle">Tesseract Handle Pointer</param>
-        /// <param name="monitorHandle">Monitor Handle Pointer</param>
-        /// <returns>0 = success, -1 = failed</returns>
-        [DllImport(DLL_NAME, EntryPoint = "TessBaseAPIRecognize")]
-        public static extern int Recognize(IntPtr tesseractHandle, IntPtr monitorHandle);
-
-        /// <summary>
-        /// Gets the OCR Engine Mode
-        /// </summary>
-        /// <param name="tesseractHandle">Tesseract Handle Pointer</param>
-        /// <returns>OCR Engine Mode</returns>
-        [DllImport(DLL_NAME, EntryPoint = "TessBaseAPIOem")]
-        public static extern OCREngineMode GetTesseractEngineMode(IntPtr tesseractHandle);
 
         /// <summary>
         /// Gets tesseract's version
