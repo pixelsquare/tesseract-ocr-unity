@@ -67,7 +67,7 @@ namespace PixelSquare.TesseractOCR
         {
             if(m_Handle == IntPtr.Zero)
             {
-                m_Handle = TesseractOCRBridge.CreateHandle();
+                m_Handle = TesseractOCRBridge.CreaateTesseractHandle();
             }
 
             CoroutineRunner.RunCoroutine(InitializeRoutine(languageId));
@@ -251,8 +251,8 @@ namespace PixelSquare.TesseractOCR
         {
             if(m_Handle != IntPtr.Zero)
             {
-                TesseractOCRBridge.EndTesseract(m_Handle);
-                TesseractOCRBridge.DeleteHandle(m_Handle);
+                TesseractOCRBridge.EndTesseractHandle(m_Handle);
+                TesseractOCRBridge.DeleteTesseractHandle(m_Handle);
                 m_Handle = IntPtr.Zero;
             }
         }
