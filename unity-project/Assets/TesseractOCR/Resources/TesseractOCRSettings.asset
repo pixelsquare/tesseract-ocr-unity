@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d73735d9e6e7da469760bf5ec8f19a4, type: 3}
   m_Name: TesseractOCRSettings
   m_EditorClassIdentifier: 
-  m_TessdataDirectory: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast
   m_TessdataList:
   - selected: 0
     name: afr.traineddata
@@ -639,3 +638,4 @@ MonoBehaviour:
     path: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast\yor.traineddata
     fileSize: 963400
     fileSizeString: 940.82 KB
+  m_TessdataDirectory: E:\Projects\Github\tesseract-ocr-unity\unity-project\..\tessdata_fast

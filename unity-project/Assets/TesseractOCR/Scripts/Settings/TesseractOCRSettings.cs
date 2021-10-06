@@ -15,6 +15,7 @@ using UnityEditor;
 
 using System;
 using System.IO;
+using System.Text;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -40,6 +41,29 @@ namespace PixelSquare.TesseractOCR
             public string path;
             public long fileSize;
             public string fileSizeString;
+        }
+
+        /// <summary>
+        /// Tesseract's configuration information
+        /// </summary>
+        [System.Serializable]
+        public struct TesseractConfigInfo
+        {
+            public string name;
+            public string value;
+            public string description;
+        }
+
+        /// <summary>
+        /// Use to sort configuration names in ascending order
+        /// </summary>
+        [System.Serializable]
+        public class AscendingCompare : IComparer<TesseractConfigInfo>
+        {
+            public int Compare(TesseractConfigInfo x, TesseractConfigInfo y)
+            {
+                return (new CaseInsensitiveComparer()).Compare(x.name, y.name);
+            }
         }
 
         /// <summary>
@@ -110,7 +134,11 @@ namespace PixelSquare.TesseractOCR
         private long m_TotalTessdataSize = 0;
         private bool m_IsAllDataSelected = false;
 
+        private TesseractConfigInfo[] m_TesseractConfigInfo = new TesseractConfigInfo[0];
+        private TesseractConfigInfo[] m_TesseractDefaultConfigInfo = new TesseractConfigInfo[0];
+
         private Vector2 m_TessdataListScrollView = new Vector2();
+        private Vector2 m_TesseractConfigScrollView = new Vector2();
 #endif
 
         /// <summary>
@@ -121,8 +149,10 @@ namespace PixelSquare.TesseractOCR
 #if UNITY_EDITOR
             m_TessdataDirectory = Path.Combine(Directory.GetCurrentDirectory(), "..", "tessdata_fast");
             SetTesseractDataDirty();
+            InitializeTesseractConfiguration();
 #endif
         }
+
 
         /// <summary>
         /// Execute everytime the asset is selected in the editor
@@ -158,6 +188,26 @@ namespace PixelSquare.TesseractOCR
         public void OnInspectorGUI()
         {
             EditorGUILayout.BeginVertical();
+
+            DrawTesseractSettingsGUI();
+
+            EditorGUILayout.Space();
+
+            DrawTessdataGUI();
+
+            EditorGUILayout.EndVertical();
+        }
+
+        /// <summary>
+        /// Draws tess data gui
+        /// </summary>
+        private void DrawTessdataGUI()
+        {
+            EditorGUILayout.BeginVertical();
+
+            EditorGUILayout.LabelField("Tessdata Settings", EditorStyles.boldLabel);
+
+            EditorGUILayout.BeginVertical("box");
 
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.PrefixLabel("Tessdata Directory");
@@ -263,9 +313,185 @@ namespace PixelSquare.TesseractOCR
                 }
             }
 
-            EditorGUILayout.Space();
+            EditorGUILayout.EndVertical();
 
             EditorGUILayout.EndVertical();
+        }
+
+        /// <summary>
+        /// Draws tesseract settings gui
+        /// </summary>
+        private void DrawTesseractSettingsGUI()
+        {
+            EditorGUILayout.BeginVertical();
+
+            EditorGUILayout.LabelField("Tesseract Settings", EditorStyles.boldLabel);
+
+            EditorGUILayout.BeginVertical("box");
+
+            EditorGUILayout.BeginVertical("box");
+
+            EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.PrefixLabel("Config Name", EditorStyles.boldLabel);
+            EditorGUILayout.TextField("Default", EditorStyles.boldLabel);
+            EditorGUILayout.TextField("Custom", EditorStyles.boldLabel);
+            EditorGUILayout.EndHorizontal();
+
+            m_TesseractConfigScrollView = EditorGUILayout.BeginScrollView(m_TesseractConfigScrollView, GUILayout.Height(200.0f));
+
+
+            for(int i = 0; i < m_TesseractDefaultConfigInfo.Length; i++)
+            {
+                Color oldColor = GUI.color;
+                GUI.color = m_TesseractDefaultConfigInfo[i].value != m_TesseractConfigInfo[i].value ? Color.yellow : oldColor;
+
+                EditorGUILayout.BeginHorizontal();
+
+                EditorGUILayout.PrefixLabel(new GUIContent(m_TesseractDefaultConfigInfo[i].name, m_TesseractDefaultConfigInfo[i].description));
+                EditorGUILayout.TextField(m_TesseractDefaultConfigInfo[i].value, EditorStyles.label);
+
+                m_TesseractConfigInfo[i].value = EditorGUILayout.TextField(m_TesseractConfigInfo[i].value);
+
+                EditorGUILayout.EndHorizontal();
+
+                GUI.color = oldColor;
+            }
+
+            EditorGUILayout.EndScrollView();
+            EditorGUILayout.EndVertical();
+
+            if(GUILayout.Button("Refresh"))
+            {
+                InitializeTesseractConfiguration();
+            }
+
+            if(GUILayout.Button("Export"))
+            {
+                ExportTesseractConfiguration();
+            }
+
+            if(GUILayout.Button("Save & Export"))
+            {
+                ExportTesseractConfiguration(false);
+            }
+
+            EditorGUILayout.EndVertical();
+
+            EditorGUILayout.EndVertical();
+        }
+
+        /// <summary>
+        /// Initializes tesseract's configuration list
+        /// </summary>
+        private void InitializeTesseractConfiguration()
+        {
+            IntPtr handle = TesseractOCRBridge.CreateTesseractHandle();
+
+            if(TesseractOCRBridge.Initialize(handle, Application.persistentDataPath + "/tessdata", "eng") == 0)
+            {
+                TesseractOCRBridge.PrintVariablesToFile(handle, "config");
+            }
+
+            TesseractOCRBridge.EndTesseractHandle(handle);
+            TesseractOCRBridge.DeleteMonitorHandle(handle);
+
+            string defaultConfigPath = Path.Combine(Directory.GetCurrentDirectory(), "config");
+
+            if(File.Exists(defaultConfigPath))
+            {
+                string[] lines = File.ReadAllLines(defaultConfigPath);
+
+                m_TesseractDefaultConfigInfo = new TesseractConfigInfo[lines.Length];
+
+                for(int i = 0; i < lines.Length; i++)
+                {
+                    string[] split = lines[i].Split('\t');
+                    m_TesseractDefaultConfigInfo[i] = new TesseractConfigInfo()
+                    {
+                        name = split[0],
+                        value = split[1],
+                        description = split[2]
+                    };
+                }
+
+                IComparer<TesseractConfigInfo> comparer = new AscendingCompare();
+                Array.Sort<TesseractConfigInfo>(m_TesseractDefaultConfigInfo, comparer);
+
+                int defaultConfigLen = m_TesseractDefaultConfigInfo.Length;
+                m_TesseractConfigInfo = new TesseractConfigInfo[defaultConfigLen];
+                Array.Copy(m_TesseractDefaultConfigInfo, m_TesseractConfigInfo, defaultConfigLen);
+
+                File.Delete(defaultConfigPath);
+            }
+
+            string userDefinedConfigPath = "Assets/StreamingAssets/tessdata/configs";
+
+            if(Directory.Exists(userDefinedConfigPath))
+            {
+                string[] configs = Directory.GetFiles(userDefinedConfigPath, "*.", SearchOption.TopDirectoryOnly);
+
+                if(configs.Length == 1)
+                {
+                    string[] lines = File.ReadAllLines(configs[0]);
+
+                    for(int i = 0; i < lines.Length; i++)
+                    {
+                        string[] split = lines[i].Split('\t');
+                        int index = Array.FindIndex<TesseractConfigInfo>(m_TesseractConfigInfo, a => a.name == split[0]);
+
+                        if(index >= 0)
+                        {
+                            m_TesseractConfigInfo[index].value = split[1];
+                        }
+                    }
+
+                    IComparer<TesseractConfigInfo> comparer = new AscendingCompare();
+                    Array.Sort<TesseractConfigInfo>(m_TesseractDefaultConfigInfo, comparer);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Exports tesseract's configuration in a file
+        /// </summary>
+        /// <param name="showSaveFilePanel">Show Save File Panel</param>
+        private void ExportTesseractConfiguration(bool showSaveFilePanel = true)
+        {
+            string tessConfigsPath = "Assets/StreamingAssets/tessdata/configs";
+
+            if(!Directory.Exists(tessConfigsPath))
+            {
+                Directory.CreateDirectory(tessConfigsPath);
+            }
+
+            string filepath = Path.Combine(tessConfigsPath, "custom_config");
+
+            if(showSaveFilePanel)
+            {
+                filepath = EditorUtility.SaveFilePanelInProject("Save Tesseract Configuration", "custom_config", "", "", tessConfigsPath);
+            }
+
+            if(!string.IsNullOrEmpty(filepath))
+            {
+                StringBuilder sb = new StringBuilder();
+
+                for(int i = 0; i < m_TesseractConfigInfo.Length; i++)
+                {
+                    sb.Append(m_TesseractConfigInfo[i].name)
+                      .Append("\t")
+                      .Append(m_TesseractConfigInfo[i].value)
+                      .Append("\n");
+                }
+
+                File.WriteAllText(filepath, sb.ToString(), Encoding.UTF8);
+                AssetDatabase.Refresh();
+
+                if(!showSaveFilePanel)
+                {
+                    TextAsset textAsset = AssetDatabase.LoadAssetAtPath<TextAsset>(filepath);
+                    EditorGUIUtility.PingObject(textAsset);
+                }
+            }
         }
 
         /// <summary>
@@ -369,6 +595,7 @@ namespace PixelSquare.TesseractOCR
         /// Context menu for this settings
         /// </summary>
         [MenuItem("TesseractOCR/Settings")]
+        [RuntimeInitializeOnLoadMethod]
         private static void InitializeEditorWindow()
         {
             Selection.activeObject = Instance;
