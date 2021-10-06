@@ -368,7 +368,7 @@ namespace PixelSquare.TesseractOCR
         /// <summary>
         /// Context menu for this settings
         /// </summary>
-        [MenuItem("Tools/TesseractOCR/Settings")]
+        [MenuItem("TesseractOCR/Settings")]
         private static void InitializeEditorWindow()
         {
             Selection.activeObject = Instance;
