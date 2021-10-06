@@ -2,7 +2,7 @@
 SETLOCAL
 
 SET APK_NAME="tesseract.apk"
-SET PACKAGE_NAME="com.PixelSquare.tesseractocr"
+SET PACKAGE_NAME="com.pixelsquare.tesseractocr"
 
 REM SET /p INSTALLED_PACKAGE_NAME=adb shell pm list packages %PACKAGE_NAME%
 REM ECHO %INSTALLED_PACKAGE_NAME%
