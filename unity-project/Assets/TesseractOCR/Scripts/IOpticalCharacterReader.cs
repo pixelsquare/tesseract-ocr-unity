@@ -65,6 +65,13 @@ namespace PixelSquare.TesseractOCR
         void SetImage(byte[] imageData, int width, int height);
 
         /// <summary>
+        /// Sets the configuration file
+        /// </summary>
+        /// <param name="filename">Config Filename</param>
+        /// <param name="isDebug">Is Debug</param>
+        void SetConfigurationFile(string filename, bool isDebug);
+
+        /// <summary>
         /// Gets the text from the image in UTF-8 format
         /// </summary>
         /// <returns>UTF-8 Text</returns>

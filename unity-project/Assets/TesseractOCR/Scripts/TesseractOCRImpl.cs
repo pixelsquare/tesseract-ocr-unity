@@ -44,6 +44,16 @@ namespace PixelSquare.TesseractOCR
         private const string TESS_DATA_DIR_NAME = "tessdata";
 
         /// <summary>
+        /// Tesseract config directory name
+        /// </summary>
+        private const string TESSERACT_CONFIG_DIR_NAME = "configs";
+
+        /// <summary>
+        /// Tesseract config file name
+        /// </summary>
+        private const string TESSERACT_CONFIG_FILE_NAME = "custom_config";
+
+        /// <summary>
         /// Tess data extension
         /// </summary>
         private const string TESS_DATA_EXT = ".traineddata";
@@ -67,7 +77,7 @@ namespace PixelSquare.TesseractOCR
         {
             if(m_Handle == IntPtr.Zero)
             {
-                m_Handle = TesseractOCRBridge.CreaateTesseractHandle();
+                m_Handle = TesseractOCRBridge.CreateTesseractHandle();
             }
 
             CoroutineRunner.RunCoroutine(InitializeRoutine(languageId));
@@ -158,6 +168,26 @@ namespace PixelSquare.TesseractOCR
                 Color32[] colorBuffer = TesseractOCRUtility.ImageFlipVertical(imageData, width, height);
                 imageData = TesseractOCRUtility.Color32ToBytes(colorBuffer);
                 TesseractOCRBridge.SetImageData(m_Handle, imageData, width, height, BYTES_PER_PIXEL, BYTES_PER_PIXEL * width);
+            }
+        }
+
+        /// <summary>
+        /// Sets the configuration file
+        /// </summary>
+        /// <param name="filename">Config Filename</param>
+        /// <param name="isDebug">Is Debug</param>
+        public void SetConfigurationFile(string filename, bool isDebug = false)
+        {
+            if(m_Handle != IntPtr.Zero)
+            {
+                if(!isDebug)
+                {
+                    TesseractOCRBridge.SetConfigurationFile(m_Handle, filename);
+                }
+                else
+                {
+                    TesseractOCRBridge.SetDebugConfigurationFile(m_Handle, filename);
+                }
             }
         }
 
@@ -264,7 +294,7 @@ namespace PixelSquare.TesseractOCR
         /// <returns>IEnumerator</returns>
         private IEnumerator InitializeRoutine(string languageId)
         {
-            // Creates a tess data directory on persistent data path
+            // Copies all tess data to persistent directory
             yield return CoroutineRunner.RunCoroutine(InitializeTessdataRoutine());
 
             string[] languageSplit = languageId.Split('+');
@@ -278,14 +308,20 @@ namespace PixelSquare.TesseractOCR
                 }
             }
 
-            // Perform initialization from the native library
-            if(TesseractOCRBridge.Initialize(m_Handle, GetTessdataPersistentPath(), languageId) == 0)
+            if(m_Handle != IntPtr.Zero)
             {
-                Debug.Log("Initialize TesseractOCR Success!");
-            }
-            else
-            {
-                Debug.Log("Initialize TesseractOCR Failed!");
+                // Perform initialization from the native library
+                if(TesseractOCRBridge.Initialize(m_Handle, GetTessdataPersistentPath(), languageId) == 0)
+                {
+                    // Copies the configuration file to persistent directory and sets the config file to use
+                    yield return CoroutineRunner.RunCoroutine(InitializeConfigFileRoutine(true));
+
+                    Debug.Log("Initialize TesseractOCR Success!");
+                }
+                else
+                {
+                    Debug.Log("Initialize TesseractOCR Failed!");
+                }
             }
         }
 
@@ -315,7 +351,7 @@ namespace PixelSquare.TesseractOCR
             for(int i = 0; i < tessdataInfoList.Length; i++)
             {
                 string filename = Path.GetFileNameWithoutExtension(tessdataInfoList[i].name);
-                yield return CoroutineRunner.RunCoroutine(LoadTesseractDataRoutine(filename));
+                yield return CoroutineRunner.RunCoroutine(LoadTesseractDataRoutine(filename, true));
                 m_AvailableDataSet.Add(filename);
                 selectedTessdataSet.Add(filename);
             }
@@ -330,6 +366,58 @@ namespace PixelSquare.TesseractOCR
                 m_AvailableDataSet.Remove(removedTessdata);
                 string fullFilePath = Path.Combine(persistentDataPath, removedTessdata + TESS_DATA_EXT);
                 File.Delete(fullFilePath);
+            }
+        }
+
+        /// <summary>
+        /// Initializes custom user-defined configuration file.
+        /// </summary>
+        /// <param name="overwrite">Overwrite</param>
+        /// <returns>IEnumerator</returns>
+        private IEnumerator InitializeConfigFileRoutine(bool overwrite = false)
+        {
+            string streamingDataPath = Path.Combine(GetTessdataStreamingPath(), TESSERACT_CONFIG_DIR_NAME);
+            string persistentDataPath = Path.Combine(GetTessdataPersistentPath(), TESSERACT_CONFIG_DIR_NAME);
+
+            if(!Directory.Exists(persistentDataPath))
+            {
+                Directory.CreateDirectory(persistentDataPath);
+            }
+
+            if(streamingDataPath.Contains("://") || streamingDataPath.Contains(":///"))
+            {
+                string streamingDataUri = Path.Combine(streamingDataPath, TESSERACT_CONFIG_FILE_NAME);
+
+                using(UnityWebRequest www = UnityWebRequest.Get(streamingDataUri))
+                {
+                    yield return www.SendWebRequest();
+
+                    if(www.isDone && www.result == UnityWebRequest.Result.Success)
+                    {
+                        string fullFilePath = Path.Combine(persistentDataPath, TESSERACT_CONFIG_FILE_NAME);
+                        File.WriteAllText(fullFilePath, www.downloadHandler.text);
+                    }
+                }
+            }
+            else
+            {
+                if(Directory.Exists(streamingDataPath))
+                {
+                    string srcFilePath = Path.Combine(streamingDataPath, TESSERACT_CONFIG_FILE_NAME);
+                    string destFilePath = Path.Combine(persistentDataPath, TESSERACT_CONFIG_FILE_NAME);
+
+                    if(!File.Exists(destFilePath) || overwrite)
+                    {
+                        File.Copy(srcFilePath, destFilePath, overwrite);
+                    }
+                }
+            }
+
+            string configFilePath = Path.Combine(persistentDataPath, TESSERACT_CONFIG_FILE_NAME);
+
+            if(File.Exists(configFilePath))
+            {
+                SetConfigurationFile(TESSERACT_CONFIG_FILE_NAME);
             }
         }
 
@@ -374,14 +462,207 @@ namespace PixelSquare.TesseractOCR
             }
             else
             {
-                if(Directory.Exists(streamingDataPath) && !m_AvailableDataSet.Contains(sanitizedFilename) || overwrite)
+                if(Directory.Exists(streamingDataPath) && !m_AvailableDataSet.Contains(sanitizedFilename))
                 {
                     string srcFilePath = Path.Combine(streamingDataPath, sanitizedFilename + TESS_DATA_EXT);
                     string destFilePath = Path.Combine(persistentDataPath, sanitizedFilename + TESS_DATA_EXT);
-                    File.Copy(srcFilePath, destFilePath, overwrite);
+
+                    if(!File.Exists(destFilePath) || overwrite)
+                    {
+                        File.Copy(srcFilePath, destFilePath, overwrite);
+                    }
                 }
             }
 
+        }
+
+        /// <summary>
+        /// Recognizes the image if the library can parse it
+        /// Monitor handle can be nulled
+        /// </summary>
+        /// <returns>0 = success, -1 = failed</returns>
+        private int Recognize()
+        {
+            Debug.Assert(m_Handle != IntPtr.Zero, "Handle must not be nulled!");
+
+            if(m_Handle != IntPtr.Zero)
+            {
+                return TesseractOCRBridge.Recognize(m_Handle, IntPtr.Zero);
+            }
+
+            return -1;
+        }
+
+        /// <summary>
+        /// Sets the page segmentation mode.
+        /// </summary>
+        /// <param name="mode">Segmentation Mode</param>
+
+        private void SetPageSegmentationMode(SegmentationMode mode)
+        {
+            Debug.Assert(m_Handle != IntPtr.Zero, "Handle must not be nulled!");
+
+            if(m_Handle != IntPtr.Zero)
+            {
+                TesseractOCRBridge.SetPageSegmentationMode(m_Handle, mode);
+            }
+        }
+
+        /// <summary>
+        /// Gets the page segmentation mode
+        /// </summary>
+        /// <returns>Segmentation Mode</returns>
+        private SegmentationMode GetPageSegmentationMode()
+        {
+            Debug.Assert(m_Handle != IntPtr.Zero, "Handle must not be nulled!");
+
+            if(m_Handle != IntPtr.Zero)
+            {
+                return TesseractOCRBridge.GetPageSegmentationMode(m_Handle);
+            }
+
+            return SegmentationMode.SINGLE_BLOCK;
+        }
+
+        /// <summary>
+        /// Gets the OCR Engine Mode
+        /// </summary>
+        /// <returns>OCR Engine Mode</returns>
+        private OCREngineMode GetOCREngineMode()
+        {
+            Debug.Assert(m_Handle != IntPtr.Zero, "Handle must not be nulled!");
+
+            if(m_Handle != IntPtr.Zero)
+            {
+                return TesseractOCRBridge.GetTesseractEngineMode(m_Handle);
+            }
+
+            return OCREngineMode.DEFAULT;
+        }
+
+        /// <summary>
+        /// Sets a configuration variable
+        /// </summary>
+        /// <param name="name">Parameter Name</param>
+        /// <param name="value">Parameter Value</param>
+        /// <param name="isDebug">Is Debug</param>
+        private void SetConfigVariable(string name, string value, bool isDebug = false)
+        {
+            Debug.Assert(m_Handle != IntPtr.Zero, "Handle must not be nulled!");
+
+            if(m_Handle != IntPtr.Zero)
+            {
+                if(!isDebug)
+                {
+                    TesseractOCRBridge.SetVariable(m_Handle, name, value);
+                }
+                else
+                {
+                    TesseractOCRBridge.SetDebugVariable(m_Handle, name, value);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets a type string configuration variable
+        /// </summary>
+        /// <param name="name">Parameter Name</param>
+        /// <returns>String Result</returns>
+        private string GetConfigStringVariable(string name)
+        {
+            Debug.Assert(m_Handle != IntPtr.Zero, "Handle must not be nulled!");
+
+            if(m_Handle != IntPtr.Zero)
+            {
+                IntPtr stringPtr = TesseractOCRBridge.GetVariable(m_Handle, name);
+                Debug.Assert(stringPtr != IntPtr.Zero, "Handle must not be nulled!");
+
+                if(stringPtr != IntPtr.Zero)
+                {
+                    return Marshal.PtrToStringAnsi(stringPtr);
+                }
+            }
+
+            return "";
+        }
+
+        /// <summary>
+        /// Gets a type integer configuration variable
+        /// </summary>
+        /// <param name="name">Parameter Name</param>
+        /// <returns>Integer Result</returns>
+        private int GetConfigIntVariable(string name)
+        {
+            int result = 0;
+
+            Debug.Assert(m_Handle != IntPtr.Zero, "Handle must not be nulled!");
+
+            if(m_Handle != IntPtr.Zero)
+            {
+                if(TesseractOCRBridge.GetVariable(m_Handle, name, out result))
+                {
+                    return result;
+                }
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Gets a type boolean configuration variable
+        /// </summary>
+        /// <param name="name">Parameter Name</param>
+        /// <returns>Integer Result</returns>
+        private bool GetConfigBoolVariable(string name)
+        {
+            bool result = false;
+
+            Debug.Assert(m_Handle != IntPtr.Zero, "Handle must not be nulled!");
+
+            if(m_Handle != IntPtr.Zero)
+            {
+                if(TesseractOCRBridge.GetVariable(m_Handle, name, out result))
+                {
+                    return result;
+                }
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Gets a type double configuration variable
+        /// </summary>
+        /// <param name="name">Parameter Name</param>
+        /// <returns>Double Result</returns>
+        private double GetConfigDoubleVariable(string name)
+        {
+            double result = 0;
+
+            Debug.Assert(m_Handle != IntPtr.Zero, "Handle must not be nulled!");
+
+            if(m_Handle != IntPtr.Zero)
+            {
+                if(TesseractOCRBridge.GetVariable(m_Handle, name, out result))
+                {
+                    return result;
+                }
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Clears tesseract engine's persistent cache
+        /// </summary>
+        private void ClearPersistentCache()
+        {
+            Debug.Assert(m_Handle != IntPtr.Zero, "Handle must not be nulled!");
+
+            if(m_Handle != IntPtr.Zero)
+            {
+                TesseractOCRBridge.ClearPersistentCache(m_Handle);
+            }
         }
 
         /// <summary>
